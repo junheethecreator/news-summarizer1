@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>News Summarizer — Demo</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans KR"; padding: 2rem; background:#fff; color:#111; }
+    #app { max-width: 900px; margin: 0 auto; }
+    textarea { width:100%; height:140px; font-size:14px; padding:8px; box-sizing:border-box; }
+    button { margin-top: 0.6rem; padding: 8px 14px; font-size:14px; }
+    #result { white-space:pre-wrap; background:#f7f7f7; padding:12px; margin-top:10px; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>News Summarizer — Demo</h1>
+    <p>뉴스 텍스트를 넣고 '요약하기'를 누르면 간단히 요약(데모)이 나옵니다.</p>
+    <textarea id="input" placeholder="여기에 뉴스 텍스트를 붙여 넣으세요"></textarea>
+    <br/>
+    <button id="summarize">요약하기</button>
+    <h2>요약 결과</h2>
+    <div id="result">결과가 여기에 표시됩니다.</div>
+  </div>
+
+  <script>
+    document.getElementById('summarize').addEventListener('click', function () {
+      const txt = document.getElementById('input').value.trim();
+      if (!txt) { alert('텍스트를 입력하세요'); return; }
+      // 실제 앱이라면 외부 요약 API 호출을 여기서 수행
+      const sentences = txt.split(/[.?!]\s*/).filter(Boolean);
+      const take = Math.max(1, Math.ceil(sentences.length / 3));
+      const summary = sentences.slice(0, take).join('. ') + (sentences.length ? '.' : '');
+      document.getElementById('result').innerText = summary;
+    });
+  </script>
+</body>
+</html>
